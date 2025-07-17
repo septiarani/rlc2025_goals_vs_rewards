@@ -1,4 +1,4 @@
-class MDP(object):
+class mdp(object):
     def __init__(self): # constructor method initializes an instance of the 'MDP' class
         pass # placeholder indicating that no initialization actions are performed
 

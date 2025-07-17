@@ -1,8 +1,8 @@
-from MDP import MDP
+from mdp import mdp
 import pandas as pd
-from Utils import powerset, value_iteration, get_policy, test_specification, rollout_policy
+from utils import powerset, value_iteration, get_policy, test_specification, rollout_policy
 
-class Navigation(MDP):
+class Navigation(mdp):
     def __init__(self, rewards_matrix_file, discount=0.99):
         self.discount = discount
         self.get_all_facts()
@@ -112,7 +112,8 @@ class Navigation(MDP):
             # print(df.iloc[row_id, 212:240])
             # for col_id in range(212, 240):
             #     print("row_id: ", row_id, "column_id: ", col_id, "value: ", df.iloc[row_id, col_id])
-            all_rewards = df.iloc[row_id,  83:107].tolist()
+            # all_rewards = df.iloc[row_id,  83:107].tolist()
+            all_rewards = df.iloc[row_id,  65:89].tolist()
             action_list = self.get_actions()
             fact_list = self.fact_list
             rewards_matrix = {act: {fact: 0 for fact in fact_list} for act in action_list}
@@ -125,7 +126,10 @@ class Navigation(MDP):
             self.all_reward_matrices.append(rewards_matrix)
 
 if __name__ == '__main__':
-    mdp = Navigation('Latest.xlsx')
+    # For rewards main study, uncomment the line below
+    mdp = Navigation('RewardsMainStudy.xlsx')
+    # For rewards variant 1, uncomment the line below
+    # mdp = Navigation('RewardsVariant1.xlsx')
     target_trajectory = ['Pick up the suitcase outside the room', 'Open the door', 'Dropoff the suitcase inside the room', 'Exit the task']
     for participant_id in range(len(mdp.all_reward_matrices)):
         value_iteration(mdp, participant_id=participant_id)

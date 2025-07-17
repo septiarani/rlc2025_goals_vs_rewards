@@ -1,8 +1,8 @@
-from MDP import MDP
+from mdp import mdp
 import pandas as pd
-from Utils import powerset, value_iteration_sas, get_policy, test_specification, rollout_policy
+from utils import powerset, value_iteration_sas, get_policy, test_specification, rollout_policy
 
-class NewNavigation(MDP):
+class NewNavigation(mdp):
     def __init__(self, rewards_matrix_file, discount=0.99):
         self.discount = discount
         self.get_all_facts()
@@ -22,7 +22,7 @@ class NewNavigation(MDP):
         # 4. The robot is not holding the suitcase
         # 5. The suitcase is inside the room
         # 6. The suitcase is outside the room.
-        self.fact_list = [ 'The door is closed','The door is open', 'The robot is holding the suitcase', 'The robot is not holding the suitcase', 'The suitcase is inside the room', 'The suitcase is outside the room', 'The robots power is off', 'task_complete']
+        self.fact_list = ['The door is closed','The door is open', 'The robot is holding the suitcase', 'The robot is not holding the suitcase', 'The suitcase is inside the room', 'The suitcase is outside the room', 'The robots power is off', 'task_complete']
         self.fact_set = set(self.fact_list)
 
     def generate_state_space(self):
@@ -120,7 +120,7 @@ class NewNavigation(MDP):
             # print(df.iloc[row_id, 212:240])
             # for col_id in range(212, 240):
             #     print("row_id: ", row_id, "column_id: ", col_id, "value: ", df.iloc[row_id, col_id])
-            all_rewards = df.iloc[row_id,  0:7].tolist()
+            all_rewards = df.iloc[row_id, 0:7].tolist()
             #print("all_rewards: ", all_rewards)
             #print(self.fact_list)
             action_list = self.get_actions()
@@ -136,7 +136,7 @@ class NewNavigation(MDP):
             self.all_reward_matrices.append(rewards_matrix)
 
 if __name__ == '__main__':
-    mdp = NewNavigation('Rew_Feb23.xlsx')
+    mdp = NewNavigation('RewardsVariant2.xlsx')
     target_trajectory = ['Pick up the suitcase outside the room', 'Open the door', 'Dropoff the suitcase inside the room', 'Switch off the robot']
     for participant_id in range(len(mdp.all_reward_matrices)):
         # for s in mdp.get_state_space():

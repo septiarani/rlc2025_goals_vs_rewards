@@ -7,8 +7,6 @@ def powerset(iterable):
     power_set_with_set = [set(x) for x in pow_set]
     return power_set_with_set
 
-
-
 def test_specification(mdp, trajectory, participant_id=0):
     initial_state = mdp.get_init_state()
     current_state = initial_state
@@ -24,10 +22,8 @@ def test_specification(mdp, trajectory, participant_id=0):
                 max_value_act_list = [a]
             elif curr_val == max_value:
                 max_value_act_list.append(a)
-
         if mdp.Q[participant_id][mdp.get_state_hash(current_state)][act] != max_value:
             return False, False
-
         if len(max_value_act_list) > 1:
             underspecified_flag = True
             print ("Underspecified: ", current_state, act, max_value_act_list)
@@ -35,9 +31,7 @@ def test_specification(mdp, trajectory, participant_id=0):
             if mdp.get_transition_probability(current_state, act, s_prime) > 0:
                 current_state = s_prime
                 break
-
     return correct_flag, underspecified_flag
-
 
 def rollout_policy(mdp, policy, max_steps=1000, participant_id=0, end_token=None):
     # pass
@@ -63,7 +57,6 @@ def rollout_policy(mdp, policy, max_steps=1000, participant_id=0, end_token=None
 def value_iteration(mdp, epsilon=0.001, participant_id=0):
     mdp.V.append({mdp.get_state_hash(s): 0 for s in mdp.get_state_space()})
     mdp.Q.append({mdp.get_state_hash(s): {} for s in mdp.get_state_space()})
-
     while True:
         delta = 0
         for s in mdp.get_state_space():
@@ -101,7 +94,6 @@ def value_iteration(mdp, epsilon=0.001, participant_id=0):
 def value_iteration_sas(mdp, epsilon=0.001, participant_id=0):
     mdp.V.append({mdp.get_state_hash(s): 0 for s in mdp.get_state_space()})
     mdp.Q.append({mdp.get_state_hash(s): {} for s in mdp.get_state_space()})
-
     while True:
         delta = 0
         for s in mdp.get_state_space():
